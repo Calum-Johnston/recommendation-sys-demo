@@ -1,0 +1,21 @@
+book_id,book_author,book_title,book_genre
+1,Suzanne Collins,The Hunger Games,Adventure|Dystopian|Science Fiction
+2,Jane Austen,Pride and Prejudice,Romance|Historical
+3,Jane Austen,Sense and Sensibility,Romance|Historical
+4,F. Scott Fitzgerald,The Great Gatsby,Tragedy
+5,Andy Weir,The Martian,Science Fiction
+6,John Steinbeck,Of Mice and Men,Tragedy
+7,Orson Scott Card,Ender's Game,Science Fiction
+8,J.K. Rowling,Harry Potter and the Philosopher's Stone,Adventure|Fantasy
+9,Dan Brown,The Da Vinci Code,Mystery|Detective Fiction|Thriller
+10,William Golding,Lord of the Flies,Adventure|Dystopian
+11,Gillian Flynn,Gone Girl,Thriller
+12,George R.R. Martin,A Game of Thrones,Fantasy
+13,George R.R. Martin,A Clash of Kings,Fantasy
+14,C.S. Lewis,"The Lion, the Witch and the Wardrobe",Adventure|Fantasy
+15,Jojo Moyes,Me Before You,Romance
+16,Margaret Mitchell,Gone with the wind,Historical Fiction
+17,Audrey Niffenegger,The Time Traveler's Wife,Science Fiction|Romance
+18,Agatha Christie,Murder on the Orient Express,Mystery|Detective Fiction|Thriller
+19,Douglas Adams,The Hitchhiker's Guide to the Galaxy,Science Fiction
+20,Ken Follett,The Pillars of the Earth,Historical Fiction
