@@ -17,13 +17,35 @@
   <body>
     <div class="container">
       <div class="table-responsive">
-        <h1>Information for account: {{data}}</h1>
+        <h1>Information for account:</h1>
+        <h2 id="user_id">{{data}}</h2>
         {{table | safe}}
         <br />
-        <div>
-          <button type="button" name="load_data" id="load_data" class="btn btn-info">Add</button>
-          <button type="button" name="load_data" id="load_data" class="btn btn-info">Edit</button>
-          <button type="button" name="load_data" id="load_data" class="btn btn-info">Delete</button>
+        <div class="container">
+          <button type="button" name="add_data" id="add_data" class="btn btn-info">Add</button>
+          <div>
+            <label for="add_rating_id" id="add_rating_label">What rating would you like to add?</label>
+            <input type="number" id="add_rating_id" name="add_rating_id">
+            <label for="add_book_id" id="add_book_label">What book would you like to add the rating to?</label>
+            <input type="number" id="add_book_id" name="add_book_id">
+            <button type="button" name="add_data_confirm" id="add_data_confirm" class="btn btn-info">Confirm addition</button>
+          </div>
+          <button type="button" name="edit_data" id="edit_data" class="btn btn-info">Edit</button>
+          <div>
+            <label for="edit_book_id" id="edit_book_label">What book would you like the rating of?</label>
+            <input type="number" id="edit_book_id" name="edit_book_id">
+            <label for="edit_rating_id" id="edit_rating_label">What is the new rating?</label>
+            <input type="number" id="edit_rating_id" name="edit_rating_id">
+            <button type="button" name="edit_data_confirm" id="edit_data_confirm" class="btn btn-info">Confirm edit</button>
+          </div>
+          <div>
+            <button type="button" name="delete_data" id="delete_data" class="btn btn-info">Delete</button>
+            <div>
+              <label for="delete_id" id="delete_label">What book would you like to remove</label>
+              <input type="number" id="delete_id" name="delete_id">
+              <button type="button" name="delete_data_confirm" id="delete_data_confirm" class="btn btn-info">Confirm delete</button>
+            </div>
+          </div>
         </div>
         <br />
         <div id="employee_table"></div>
