@@ -1,9 +1,9 @@
 import pandas as pd
 import numpy as np
-from flask import Flask, render_template, request, json
-import os
+from flask import Flask, render_template, request, json, redirect, url_for
 
 app = Flask(__name__)
+
 
 ###########################################################
 # MAIN FUNCTIONS
@@ -16,8 +16,20 @@ def index():
 def signInUser():
     user =  request.form['username'];
     password = request.form['password'];
-    return json.dumps({'status':'OK','user':user,'pass':password});
+    for indexes, row in users.iterrows():
+        if(str(row['user_id']) == str(user) and str(row['user_password']) == str(password)):
+            return json.dumps({'status':'OK','user':user,'pass':password});
+    return json.dumps({'status':'FAIL','user':user,'pass':password});
 
+# Displays user information once logged in
+@app.route('/account')
+def display_Information():
+    return render_template('account.html', data=request.args.get('user_id'), table=ratings)
+
+@app.route('/getRatingsTable')
+def getRatingsTable():
+    print("Hi")
+    return ratings
 
 ###########################################################
 # ADDITIONAL FUNCTIONS

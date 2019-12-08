@@ -8,7 +8,13 @@ $(function(){
 			data: $('#login_form').serialize(),
 			type: 'POST',
 			success: function(response){
-				console.log(response);
+				var response = JSON.parse(response)
+				if(response.status == "OK"){
+					console.log("hi")
+					window.location.replace("/account?user_id=" + response.user)
+				}else{
+					alert("Incorrect username/password")
+				}			
 			},
 			error: function(error){
 				console.log(error);

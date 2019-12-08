@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Account information</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <!--<link href="static/css/signup.css" rel="stylesheet">-->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> 
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="static/js/account.js"></script>
+  </head>
+  
+  <body>
+    <div class="container">
+      <div class="table-responsive">
+        <h1>Information for account: {{data}}</h1>
+        {{table}}
+        <br />
+        <div>
+          <button type="button" name="load_data" id="load_data" class="btn btn-info">Load Data</button>
+        </div>
+        <br />
+        <div id="employee_table"></div>
+      </div>
+    </div>
+
+    <div class="container" id="user_ratings_table"></div>
+
+  </body>
+ 
+</html>
