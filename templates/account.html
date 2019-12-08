@@ -18,17 +18,17 @@
     <div class="container">
       <div class="table-responsive">
         <h1>Information for account: {{data}}</h1>
-        {{table}}
+        {{table | safe}}
         <br />
         <div>
-          <button type="button" name="load_data" id="load_data" class="btn btn-info">Load Data</button>
+          <button type="button" name="load_data" id="load_data" class="btn btn-info">Add</button>
+          <button type="button" name="load_data" id="load_data" class="btn btn-info">Edit</button>
+          <button type="button" name="load_data" id="load_data" class="btn btn-info">Delete</button>
         </div>
         <br />
         <div id="employee_table"></div>
       </div>
     </div>
-
-    <div class="container" id="user_ratings_table"></div>
 
   </body>
  

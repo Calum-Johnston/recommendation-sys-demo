@@ -24,12 +24,18 @@ def signInUser():
 # Displays user information once logged in
 @app.route('/account')
 def display_Information():
-    return render_template('account.html', data=request.args.get('user_id'), table=ratings)
+    userRating = getUserRatings(request.args.get('user_id'))
+    return render_template('account.html', data=request.args.get('user_id'), table=userRating.to_html())
 
-@app.route('/getRatingsTable')
-def getRatingsTable():
-    print("Hi")
-    return ratings
+def getUserRatings(user):
+    data = []
+    for indexs, row in ratings.iterrows():
+        if(str(row['user_id']) == str(user)):
+            data.append([row['book_id'], row['rating']])
+    df = pd.DataFrame(data, columns = ['Book ID', 'Rating'])
+    return dfd
+
+
 
 ###########################################################
 # ADDITIONAL FUNCTIONS
@@ -46,6 +52,7 @@ if __name__ == "__main__":
     books = pd.read_csv("./books-dataset/books.csv")
     ratings = pd.read_csv("./books-dataset/ratings.csv")
     users = pd.read_csv("./books-dataset/users.csv")
+    print(users)
 
     # Run app
     app.run()

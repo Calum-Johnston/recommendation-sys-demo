@@ -1,7 +1,7 @@
 $(function(){
 	$('#load_data').click(function(){
 		$.ajax({
-			url:"/getRatingsTable",
+			url:"/account",
 		  	dataType:"text",
 		  	success:function(data){
 				console.log(data)

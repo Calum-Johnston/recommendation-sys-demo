@@ -1,0 +1,2 @@
+Delete a row by index
+df = df.drop(row index)
