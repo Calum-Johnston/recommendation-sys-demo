@@ -2,39 +2,37 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
 
     <title>Web Technology Coursework</title>
 
-    <link href="static/css/bootstrap.min.css" rel="stylesheet">
-    <link href="static/css/signup.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <!--<link href="static/css/signup.css" rel="stylesheet">-->
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> 
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="static/js/home.js"></script>
   </head>
   
   <body>
+
     <div class="container">
-      <form class="form-login" role="form">
-        <h2 class="form-login-heading">Sign in</h2>
-        <input type="email" id="inputUsername" name="username" class="form-control" placeholder="Email address" required autofocus>
-        <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>       
-        <button class="btn btn-lg btn-primary btn-block" type="button">Sign in</button>
+      <form id="login_form">
+        <h2>Sign in</h2>
+        <div>
+          <label class="title">Username</label>
+          <input type="text" id="login_username" name="username" class="form-control" required autofocus>
+        </div>
+        <div>
+          <label class="title">Password</label>
+          <input type="password" id="login_password" name="password" class="form-control" required>       
+        </div>
+        <div>
+          <input type="submit" id="login_submit" name="submitButton" value="Sign in">
+        </div>
       </form>   
     </div> 
-    <div class="container">
-      <form class="form-signup" role="form">
-        <h2 class="form-signup-heading">Sign up</h2>
-        <input type="test" id="login_firstname" name="firstname" class="form-control" placeholder="First name" required autofocus>
-        <input type="test" id="login_surname" name="surname" class="form-control" placeholder="Surname" required>
-        <input type="email" id="inputUsername" name="username" class="form-control" placeholder="Email address" required>
-        <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>       
-        <button class="btn btn-lg btn-primary btn-block" type="button">Sign up</button>
-      </form> 
-    </div>
+
   </body>
  
 </html>
