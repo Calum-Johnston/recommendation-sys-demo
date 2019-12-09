@@ -32,25 +32,32 @@ def signUpUser():
 def getNextUserID():
     return str(users.shape[0] + 1)
 
+
+
 # Displays user information once logged in
 @app.route('/account')
 def display_Information():
-    userRating = getUserRatings(request.args.get('user_id'))
-    userBooks = pd.merge(books, userRating, on='book_id')
+    return render_template('account.html', data=request.args.get('user_id'))
+
+@app.route('/getUserRatings')
+def getUserRatings():
+    user = request.args.get('user_id')
+    userRatings = ratings[ratings['user_id'] == int(user)]
+    del userRatings['user_id']
+    userBooks = pd.merge(books, userRatings, on='book_id')
     del userBooks['book_genre']
     userBooks = userBooks.sort_values(by='book_id')
-    return render_template('account.html', data=request.args.get('user_id'), table=userBooks.to_html(index=False))
-
-def getUserRatings(user):
-    temp = ratings[ratings['user_id'] == int(user)]
-    del temp['user_id']
-    return temp
+    return userBooks.to_json(orient='records')
 
 @app.route('/deleteuserdata', methods=['POST'])
 def deleteUserData():
     user = request.form['user_id']
     book = request.form['book_id']
     global ratings
+
+    if(ratings[(ratings['user_id'] == int(user)) & (ratings['book_id'] == int(book))].shape[0] == 0):
+        return json.dumps({'status':'FAIL'})
+    
     ratings = ratings[(ratings['user_id'] != int(user)) | (ratings['book_id'] != int(book))]
     return json.dumps({'status':'OK'})
 
@@ -59,6 +66,10 @@ def editUserData():
     user = request.form['user_id']
     book = request.form['book_id']
     rating = request.form['rating']
+
+    if(ratings[(ratings['user_id'] == int(user)) & (ratings['book_id'] == int(book))].shape[0] == 0):
+        return json.dumps({'status':'FAIL'})
+
     ratings.loc[(ratings['user_id'] == int(user)) & (ratings['book_id'] == int(book)), ['rating']] = int(rating)
     return json.dumps({'status':'OK'})
 
@@ -68,6 +79,10 @@ def addUserData():
     user = request.form['user_id']
     book = request.form['book_id']
     rating = request.form['rating']
+
+    if(ratings[(ratings['user_id'] == int(user)) & (ratings['book_id'] == int(book))].shape[0] == 1):
+        return json.dumps({'status':'FAIL'})
+
     ratings.loc[ratings.shape[0]] = [int(user), int(book), int(rating)]
     return json.dumps({'status':'OK'})
 

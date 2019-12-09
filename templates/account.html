@@ -7,7 +7,7 @@
     <title>Account information</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <!--<link href="static/css/signup.css" rel="stylesheet">-->
+    <link href="static/css/account.css" rel="stylesheet">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -19,8 +19,10 @@
       <div class="table-responsive">
         <h1>Information for account:</h1>
         <h2 id="user_id">{{data}}</h2>
-        {{table | safe}}
         <br />
+        
+        <table id="userData"></table>
+
         <div class="container">
           <button type="button" name="add_data" id="add_data" class="btn btn-info">Add</button>
           <div>

@@ -34,9 +34,14 @@ $(function(){
 			url: "/deleteuserdata",
 			data: data,
 			type: 'POST',  
-		  	success:function(data){
-				console.log(data)
-				location.reload()
+		  	success:function(response){
+				var response = JSON.parse(response)
+				if(response.status == "FAIL"){
+					console.log("hi")
+					alert("That book cannot be deleted as it hasn't been rated")
+				}else{
+					getData();
+				}
 			},  
 			error: function(e){
 				console.log("Error: ", e)
@@ -68,9 +73,13 @@ $(function(){
 			url: "/adduserdata",
 			data: data,
 			type: 'POST',  
-		  	success:function(data){
-				console.log(data)
-				location.reload()
+		  	success:function(response){
+				var response = JSON.parse(response);
+				if(response.status == 'FAIL'){
+					alert("You have already rated that book!");
+				}else{
+					getData();
+				}
 			},  
 			error: function(e){
 				console.log("Error: ", e)
@@ -97,18 +106,77 @@ $(function(){
 	$('#edit_data_confirm').click(function(){
 		data = {user_id: $('#user_id').text(), book_id: $('#edit_book_id').val(),
 				rating: $('#edit_rating_id').val()}
-		console.log(data)
 		$.ajax({
 			url: "/edituserdata",
 			data: data,
 			type: 'POST',  
-		  	success:function(data){
-				console.log(data)
-				location.reload()
+		  	success:function(response){
+				var response = JSON.parse(response);
+				if(response.status == "FAIL"){
+					alert("You cannot edit a book you have not yet rated")
+				}else{
+					getData();
+				}
 			},  
 			error: function(e){
 				console.log("Error: ", e)
 			}  
 		});
 	});
+
+	// Gets the data to fill the table in with
+	function getData(){
+		console.log("IN GET DATA")
+		$.ajax({
+			url: "/getUserRatings",
+			type: "get",
+			data: {
+				user_id: $('#user_id').text(),
+			},
+			success: function(response){
+				var response= JSON.parse(response)
+				//https://www.encodedna.com/javascript/populate-json-data-to-html-table-using-javascript.htm
+				// EXTRACT VALUE FOR HTML HEADER.
+				var col = [];
+				for (var i = 0; i < response.length; i++) {
+					for (var key in response[i]) {
+						if (col.indexOf(key) === -1) {
+							col.push(key);
+						}
+					}
+				}
+
+				// CREATE DYNAMIC TABLE.
+				var table = document.createElement("table");
+
+				// CREATE HTML TABLE HEADER ROW USING THE EXTRACTED HEADERS ABOVE.
+				var tr = table.insertRow(-1);                   // TABLE ROW.
+
+				for (var i = 0; i < col.length; i++) {
+					var th = document.createElement("th");      // TABLE HEADER.
+					th.innerHTML = col[i];
+					tr.appendChild(th);
+				}
+
+				// ADD JSON DATA TO THE TABLE AS ROWS.
+				for (var i = 0; i < response.length; i++) {
+					tr = table.insertRow(-1);
+					for (var j = 0; j < col.length; j++) {
+						var tabCell = tr.insertCell(-1);
+						tabCell.innerHTML = response[i][col[j]];
+					}
+				}
+
+				// FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
+				var divContainer = document.getElementById("userData");
+				divContainer.innerHTML = "";
+				divContainer.appendChild(table);
+			},
+			error: function(error){
+				console.log(error)
+			}
+		});
+	}
+
+	document.onload = getData();
 });
