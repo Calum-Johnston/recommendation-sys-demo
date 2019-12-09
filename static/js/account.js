@@ -1,18 +1,20 @@
 $(function(){
-	$('#delete_book_div').hide()
-	$('#edit_book_div').hide()
-	$('#add_book_div').hide()
+	$('#delete_book_form').hide()
+	$('#edit_book_form').hide()
+	$('#add_book_form').hide()
 
-	$('#delete_rating_div').hide()
-	$('#edit_rating_div').hide()
-	$('#add_rating_div').hide()
+	$('#delete_rating_form').hide()
+	$('#edit_rating_form').hide()
+	$('#add_rating_form').hide()
 
 
 	$('#delete_data').click(function(){
 		if($("#delete_data_confirm").is(":visible")){
-			$('#delete_rating_div').hide()
+			$('#delete_rating_form').hide()
 		}else{
-			$('#delete_rating_div').show()
+			$('#delete_rating_form').show()
+			$('#edit_rating_form').hide()
+			$('#add_rating_form').hide()
 		}
 	});
 
@@ -40,9 +42,11 @@ $(function(){
 
 	$('#add_data').click(function(){
 		if($("#add_data_confirm").is(":visible")){
-			$('#add_rating_div').hide()
+			$('#add_rating_form').hide()
 		}else{
-			$('#add_rating_div').show()
+			$('#add_rating_form').show()
+			$('#delete_rating_form').hide()
+			$('#edit_rating_form').hide()
 		}
 	});
 
@@ -70,9 +74,11 @@ $(function(){
 
 	$('#edit_data').click(function(){
 		if($("#edit_data_confirm").is(":visible")){
-			$('#edit_rating_div').hide()
+			$('#edit_rating_form').hide()
 		}else{
-			$('#edit_rating_div').show()
+			$('#edit_rating_form').show()
+			$('#delete_rating_form').hide()
+			$('#add_rating_form').hide()
 		}
 	});
 
@@ -116,7 +122,6 @@ $(function(){
 
 	// Gets the data to fill the table in with
 	function getUserData(){
-		console.log("IN GET DATA")
 		$.ajax({
 			url: "/getUserRatings",
 			type: "get",
@@ -141,9 +146,11 @@ $(function(){
 	// Shows delete inputs when clicked
 	$('#delete_book').click(function(){
 		if($("#delete_book_confirm").is(":visible")){
-			$('#delete_book_div').hide()
+			$('#delete_book_form').hide()
 		}else{
-			$('#delete_book_div').show()
+			$('#delete_book_form').show()
+			$('#edit_book_form').hide()
+			$('#add_book_form').hide()
 		}
 	});
 
@@ -172,9 +179,11 @@ $(function(){
 	// Shows add inputs when clicked
 	$('#add_book').click(function(){
 		if($("#add_book_confirm").is(":visible")){
-			$('#add_book_div').hide()
+			$('#add_book_form').hide()
 		}else{
-			$('#add_book_div').show()
+			$('#add_book_form').show()
+			$('#delete_book_form').hide()
+			$('#edit_book_form').hide()
 		}
 	});
 
@@ -205,9 +214,11 @@ $(function(){
 	// Shows edit inputs when clicked
 	$('#edit_book').click(function(){
 		if($("#edit_book_confirm").is(":visible")){
-			$('#edit_book_div').hide()
+			$('#edit_book_form').hide()
 		}else{
-			$('#edit_book_div').show()
+			$('#edit_book_form').show()
+			$('#delete_book_form').hide()
+			$('#add_book_form').hide()
 		}
 	});
 
