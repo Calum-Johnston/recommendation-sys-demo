@@ -124,6 +124,23 @@ $(function(){
 		});
 	});
 
+	// Gets recommendations
+	$('#recommend_data').click(function(){
+		data = {user_id: $('#user_id').text()}
+		$.ajax({
+			url: "/recommend",
+			data: data,
+			type: 'POST',  
+		  	success:function(response){
+				var response = JSON.parse(response);
+				buildTable(response, "userRecommendations")
+			},  
+			error: function(e){
+				console.log("Error: ", e)
+			}  
+		});
+	});
+
 	// Gets the data to fill the table in with
 	function getData(){
 		console.log("IN GET DATA")
@@ -135,47 +152,51 @@ $(function(){
 			},
 			success: function(response){
 				var response= JSON.parse(response)
-				//https://www.encodedna.com/javascript/populate-json-data-to-html-table-using-javascript.htm
-				// EXTRACT VALUE FOR HTML HEADER.
-				var col = [];
-				for (var i = 0; i < response.length; i++) {
-					for (var key in response[i]) {
-						if (col.indexOf(key) === -1) {
-							col.push(key);
-						}
-					}
-				}
-
-				// CREATE DYNAMIC TABLE.
-				var table = document.createElement("table");
-
-				// CREATE HTML TABLE HEADER ROW USING THE EXTRACTED HEADERS ABOVE.
-				var tr = table.insertRow(-1);                   // TABLE ROW.
-
-				for (var i = 0; i < col.length; i++) {
-					var th = document.createElement("th");      // TABLE HEADER.
-					th.innerHTML = col[i];
-					tr.appendChild(th);
-				}
-
-				// ADD JSON DATA TO THE TABLE AS ROWS.
-				for (var i = 0; i < response.length; i++) {
-					tr = table.insertRow(-1);
-					for (var j = 0; j < col.length; j++) {
-						var tabCell = tr.insertCell(-1);
-						tabCell.innerHTML = response[i][col[j]];
-					}
-				}
-
-				// FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
-				var divContainer = document.getElementById("userData");
-				divContainer.innerHTML = "";
-				divContainer.appendChild(table);
+				buildTable(response, "userData")
 			},
 			error: function(error){
 				console.log(error)
 			}
 		});
+	}
+
+	function buildTable(data, tableName){
+		//https://www.encodedna.com/javascript/populate-json-data-to-html-table-using-javascript.htm
+		// EXTRACT VALUE FOR HTML HEADER
+		var col = [];
+		for (var i = 0; i < data.length; i++) {
+			for (var key in data[i]) {
+				if (col.indexOf(key) === -1) {
+					col.push(key);
+				}
+			}
+		}
+
+		// CREATE DYNAMIC TABLE.
+		var table = document.createElement("table");
+
+		// CREATE HTML TABLE HEADER ROW USING THE EXTRACTED HEADERS ABOVE.
+		var tr = table.insertRow(-1);                   // TABLE ROW.
+
+		for (var i = 0; i < col.length; i++) {
+			var th = document.createElement("th");      // TABLE HEADER.
+			th.innerHTML = col[i];
+			tr.appendChild(th);
+		}
+
+		// ADD JSON DATA TO THE TABLE AS ROWS.
+		for (var i = 0; i < data.length; i++) {
+			tr = table.insertRow(-1);
+			for (var j = 0; j < col.length; j++) {
+				var tabCell = tr.insertCell(-1);
+				tabCell.innerHTML = data[i][col[j]];
+			}
+		}
+
+		// FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
+		var divContainer = document.getElementById(tableName);
+		divContainer.innerHTML = "";
+		divContainer.appendChild(table);
 	}
 
 	document.onload = getData();

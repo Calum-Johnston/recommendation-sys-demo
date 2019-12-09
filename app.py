@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 from flask import Flask, render_template, request, json, redirect, url_for
+from scipy.sparse.linalg import svds
 
 app = Flask(__name__)
 
@@ -86,10 +87,68 @@ def addUserData():
     ratings.loc[ratings.shape[0]] = [int(user), int(book), int(rating)]
     return json.dumps({'status':'OK'})
 
+@app.route('/recommend', methods=['POST'])
+def recommend():
+   user = request.form['user_id'] 
+   preds_df = getRecommendationsTable(user)
+   already_rated, predictions = recommendBooks(preds_df, user, 5)
+   return predictions.to_json(orient='records')
+
+
+
 
 ###########################################################
 # ADDITIONAL FUNCTIONS
 ###########################################################
+def getRecommendationsTable(user):
+    # Format ratings matrix s.t. one row per user & one column per book
+    R_df = ratings.pivot(index = 'user_id', columns ='book_id', values = 'rating').fillna(0)
+
+    # De-mean the data (normalize by each user's mean)
+    R = R_df.values
+    user_ratings_mean = np.mean(R, axis = 1)
+    # Convert dataframe to numpy array
+    R_demeaned = R - user_ratings_mean.reshape(-1, 1)
+
+    # Perform matrix factorisation via single value decomposition
+    U, sigma, Vt = svds(R_demeaned, k = 19)
+
+    # Convert diagonal values in sigma to matrix form
+    sigma = np.diag(sigma)  
+
+    # For each book calculate the estimated rating for each user
+    all_user_predicted_ratings = np.dot(np.dot(U, sigma), Vt) + user_ratings_mean.reshape(-1, 1)
+    # Convert the numpy array to dataframe
+    preds_df = pd.DataFrame(all_user_predicted_ratings, columns = R_df.columns)
+
+    return preds_df
+
+
+def recommendBooks(predictions_df, user, num_recommendations=5):
+    # Get and sort the user's predictions
+    user_row_number = int(user) - 1 # UserID starts at 1, not 0
+    sorted_user_predictions = predictions_df.iloc[user_row_number].sort_values(ascending=False)
+
+    # Get the user's data and merge in the movie information.
+    user_data = ratings[ratings.user_id == (int(user))]
+    user_full = (user_data.merge(books, how = 'left', left_on = 'book_id', right_on = 'book_id').
+                     sort_values(['rating'], ascending=False)
+                 )
+    
+    # Recommend the highest predicted rating movies that the user hasn't seen yet.
+    recommendations = (books[~books['book_id'].isin(user_full['book_id'])].
+         merge(pd.DataFrame(sorted_user_predictions).reset_index(), how = 'left',
+               left_on = 'book_id',
+               right_on = 'book_id').
+         rename(columns = {user_row_number: 'Predictions'}).
+         sort_values('Predictions', ascending = False).
+                       iloc[:num_recommendations, :-1]
+                      )
+    
+    return user_full, recommendations
+
+
+
 
 
 
