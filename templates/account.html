@@ -36,13 +36,13 @@
       <div class="container">
         <form id="add_rating_form">
           <div>
-            <label for="add_rating_id" id="add_rating_label">What rating would you like to add?</label>
-            <input type="number" id="add_rating_id" name="add_rating_id" required>
-          </div>
-          <div>
-            <label for="add_book_id" id="add_book_label">What book would you like to add the rating to?</label>
+            <label for="add_book_id" id="add_book_label">What book would you like to rate?</label>
             <input type="number" id="add_book_id" name="add_book_id" required>
-          </div>  
+          </div> 
+          <div>
+            <label for="add_rating_id" id="add_rating_label">What rating would you like to give it?</label>
+            <input type="number" id="add_rating_id" name="add_rating_id" min="1" max="5" required>
+          </div> 
           <div>
             <input type="submit" name="add_data_confirm" id="add_data_confirm" value="Confirm">
           </div>  
@@ -50,12 +50,12 @@
 
         <form id="edit_rating_form">
           <div>
-            <label for="edit_book_id" id="edit_book_label">What book would you like the rating of?</label>
+            <label for="edit_book_id" id="edit_book_label">What book would you like the edit the rating of?</label>
             <input type="number" id="edit_book_id" name="edit_book_id" required>
           </div>
           <div>
-            <label for="edit_rating_id" id="edit_rating_label">What is the new rating?</label>
-            <input type="number" id="edit_rating_id" name="edit_rating_id" required>
+            <label for="edit_rating_id" id="edit_rating_label">What is the new rating for that book (1-5)?</label>
+            <input type="number" id="edit_rating_id" name="edit_rating_id" min="1" max="5" required>
           </div>
           <div>
             <input type="submit" name="edit_data_confirm" id="edit_data_confirm" value="Confirm">

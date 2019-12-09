@@ -18,7 +18,8 @@ $(function(){
 		}
 	});
 
-	$('#delete_data_confirm').click(function(){
+	$('#delete_rating_form').on('submit', function(e){
+		e.preventDefault();
 		data = {user_id: $('#user_id').text(), book_id: $('#delete_id').val()}
 		console.log(data)
 		$.ajax({
@@ -50,10 +51,10 @@ $(function(){
 		}
 	});
 
-	$('#add_data_confirm').click(function(){
+	$('#add_rating_form').on('submit', function(e){
+		e.preventDefault();
 		data = {user_id: $('#user_id').text(), book_id: $('#add_book_id').val(),
 				rating: $('#add_rating_id').val()}
-		console.log(data)
 		$.ajax({
 			url: "/adduserdata",
 			data: data,
@@ -82,7 +83,8 @@ $(function(){
 		}
 	});
 
-	$('#edit_data_confirm').click(function(){
+	$('#edit_rating_form').on('submit', function(e){
+		e.preventDefault();
 		data = {user_id: $('#user_id').text(), book_id: $('#edit_book_id').val(),
 				rating: $('#edit_rating_id').val()}
 		$.ajax({
@@ -120,7 +122,7 @@ $(function(){
 		});
 	});
 
-	// Gets the data to fill the table in with
+	// Gets the user table data
 	function getUserData(){
 		$.ajax({
 			url: "/getUserRatings",
@@ -155,7 +157,8 @@ $(function(){
 	});
 
 	// Deletes book from csv dataframe
-	$('#delete_book_confirm').click(function(){
+	$('#delete_book_form').on('submit', function(e){
+		e.preventDefault();
 		data = {book_id: $('#delete_book_id').val()}
 		console.log(data)
 		$.ajax({
@@ -188,7 +191,8 @@ $(function(){
 	});
 
 	// Adds book to csv dataframe
-	$('#add_book_confirm').click(function(){
+	$('#add_book_form').on('submit', function(e){
+		e.preventDefault();
 		data = {book_title: $('#add_book_name').val(),
 				book_author: $('#add_book_author').val(),
 				book_genre: $('#add_book_genre').val()}
@@ -223,7 +227,8 @@ $(function(){
 	});
 
 	// Edits book in csv dataframe
-	$('#edit_book_confirm').click(function(){
+	$('#edit_book_form').on('submit', function(e){
+		e.preventDefault();
 		data = {book_id: $('#edit_book_id_').val(),
 				book_title: $('#edit_book_title').val(),
 				book_author: $('#edit_book_author').val(),

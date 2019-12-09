@@ -85,6 +85,7 @@ def addUserData():
         return json.dumps({'status':'FAIL'})
 
     ratings.loc[ratings.shape[0]] = [int(user), int(book), int(rating)]
+    print(ratings)
     return json.dumps({'status':'OK'})
 
 @app.route('/recommend', methods=['POST'])
@@ -121,7 +122,7 @@ def editBookData():
     title = request.form['book_title']
     author = request.form['book_author']
     genre = request.form['book_genre']
-    
+
     if(books[books['book_id'] == int(book)].shape[0] == 0):
         return json.dumps({'status':'FAIL'})
 

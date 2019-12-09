@@ -5,7 +5,5 @@ df = df.drop(row index)
 
 Still to do:
 - Formatting issues
-- Convert div to forms (to check data before being sent)
-- Check data before being sent
-- Incorporate sessions
 - Improve overall design
+- Reorder indexes when deleted values
