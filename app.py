@@ -37,7 +37,7 @@ def getNextUserID():
 
 # Displays user information once logged in
 @app.route('/account')
-def display_Information():
+def account():
     return render_template('account.html', data=request.args.get('user_id'))
 
 @app.route('/getUserRatings')
@@ -96,6 +96,56 @@ def recommend():
 
 
 
+@app.route('/books')
+def books():
+    return render_template('books.html')
+
+@app.route('/getBookData')
+def getBookData():
+    return books.to_json(orient='records')
+
+@app.route('/deletebookdata', methods=['POST'])
+def deleteBookData():
+    book = request.form['book_id']
+    global books
+
+    if(books[books['book_id'] == int(book)].shape[0] == 0):
+        return json.dumps({'status':'FAIL'})
+    
+    books = books[books['book_id'] != int(book)]
+    return json.dumps({'status':'OK'})
+
+@app.route('/editbookdata', methods=['POST'])
+def editBookData():
+    book = request.form['book_id']
+    title = request.form['book_title']
+    author = request.form['book_author']
+    genre = request.form['book_genre']
+    
+    if(books[books['book_id'] == int(book)].shape[0] == 0):
+        return json.dumps({'status':'FAIL'})
+
+    if(str(title) != ""):
+        books.loc[(books['book_id'] == int(book)), ['book_title']] = title
+    if(str(author) != ""):
+        books.loc[(books['book_id'] == int(book)), ['book_author']] = author   
+    if(str(genre) != ""):
+        books.loc[(books['book_id'] == int(book)), ['book_genre']] = genre
+
+    return json.dumps({'status':'OK'})
+
+
+@app.route('/addbookdata', methods=['POST'])
+def addBookData():
+    title = request.form['book_title']
+    author = request.form['book_author']
+    genre = request.form['book_genre']
+
+    if(books[(books['book_title'] == title) & (books['book_author'] == author) & (books['book_genre'] == genre)].shape[0] == 1):
+        return json.dumps({'status':'FAIL'})
+    print(title, author, genre)
+    books.loc[ratings.shape[0]] = [int(books.shape[0] + 1), title, author, genre]
+    return json.dumps({'status':'OK'})
 
 ###########################################################
 # ADDITIONAL FUNCTIONS
@@ -111,7 +161,7 @@ def getRecommendationsTable(user):
     R_demeaned = R - user_ratings_mean.reshape(-1, 1)
 
     # Perform matrix factorisation via single value decomposition
-    U, sigma, Vt = svds(R_demeaned, k = 19)
+    U, sigma, Vt = svds(R_demeaned, k = min(R_demeaned.shape[0] - 1, 50))
 
     # Convert diagonal values in sigma to matrix form
     sigma = np.diag(sigma)  

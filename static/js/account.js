@@ -1,29 +1,18 @@
 $(function(){
-	$("#delete_id").hide()
-	$("#delete_data_confirm").hide()
-	$("#delete_label").hide()
+	$('#delete_book_div').hide()
+	$('#edit_book_div').hide()
+	$('#add_book_div').hide()
 
-	$("#add_rating_label").hide()
-	$("#add_rating_id").hide()
-	$("#add_book_label").hide()
-	$("#add_book_id").hide()
-	$("#add_data_confirm").hide()
+	$('#delete_rating_div').hide()
+	$('#edit_rating_div').hide()
+	$('#add_rating_div').hide()
 
-	$("#edit_rating_label").hide()
-	$("#edit_rating_id").hide()
-	$("#edit_book_label").hide()
-	$("#edit_book_id").hide()
-	$("#edit_data_confirm").hide()
 
 	$('#delete_data').click(function(){
 		if($("#delete_data_confirm").is(":visible")){
-			$("#delete_id").hide()
-			$("#delete_data_confirm").hide()
-			$("#delete_label").hide()
+			$('#delete_rating_div').hide()
 		}else{
-			$("#delete_id").show()
-			$("#delete_data_confirm").show()
-			$("#delete_label").show()
+			$('#delete_rating_div').show()
 		}
 	});
 
@@ -40,7 +29,7 @@ $(function(){
 					console.log("hi")
 					alert("That book cannot be deleted as it hasn't been rated")
 				}else{
-					getData();
+					getUserData();
 				}
 			},  
 			error: function(e){
@@ -51,17 +40,9 @@ $(function(){
 
 	$('#add_data').click(function(){
 		if($("#add_data_confirm").is(":visible")){
-			$("#add_rating_label").hide()
-			$("#add_rating_id").hide()
-			$("#add_book_label").hide()
-			$("#add_book_id").hide()
-			$("#add_data_confirm").hide()
+			$('#add_rating_div').hide()
 		}else{
-			$("#add_rating_label").show()
-			$("#add_rating_id").show()
-			$("#add_book_label").show()
-			$("#add_book_id").show()
-			$("#add_data_confirm").show()
+			$('#add_rating_div').show()
 		}
 	});
 
@@ -78,7 +59,7 @@ $(function(){
 				if(response.status == 'FAIL'){
 					alert("You have already rated that book!");
 				}else{
-					getData();
+					getUserData();
 				}
 			},  
 			error: function(e){
@@ -89,17 +70,9 @@ $(function(){
 
 	$('#edit_data').click(function(){
 		if($("#edit_data_confirm").is(":visible")){
-			$("#edit_rating_label").hide()
-			$("#edit_rating_id").hide()
-			$("#edit_book_label").hide()
-			$("#edit_book_id").hide()
-			$("#edit_data_confirm").hide()
+			$('#edit_rating_div').hide()
 		}else{
-			$("#edit_rating_label").show()
-			$("#edit_rating_id").show()
-			$("#edit_book_label").show()
-			$("#edit_book_id").show()
-			$("#edit_data_confirm").show()
+			$('#edit_rating_div').show()
 		}
 	});
 
@@ -142,7 +115,7 @@ $(function(){
 	});
 
 	// Gets the data to fill the table in with
-	function getData(){
+	function getUserData(){
 		console.log("IN GET DATA")
 		$.ajax({
 			url: "/getUserRatings",
@@ -159,6 +132,131 @@ $(function(){
 			}
 		});
 	}
+
+
+	// ******************** //
+	// BOOK TABLE FUNCTIONS
+	// ******************** //
+
+	// Shows delete inputs when clicked
+	$('#delete_book').click(function(){
+		if($("#delete_book_confirm").is(":visible")){
+			$('#delete_book_div').hide()
+		}else{
+			$('#delete_book_div').show()
+		}
+	});
+
+	// Deletes book from csv dataframe
+	$('#delete_book_confirm').click(function(){
+		data = {book_id: $('#delete_book_id').val()}
+		console.log(data)
+		$.ajax({
+			url: "/deletebookdata",
+			data: data,
+			type: 'POST',  
+		  	success:function(response){
+				var response = JSON.parse(response)
+				if(response.status == "FAIL"){
+					alert("That book cannot be deleted as it doesn't exist")
+				}else{
+					getBookData();
+				}
+			},  
+			error: function(e){
+				console.log("Error: ", e)
+			}  
+		});
+	});
+
+	// Shows add inputs when clicked
+	$('#add_book').click(function(){
+		if($("#add_book_confirm").is(":visible")){
+			$('#add_book_div').hide()
+		}else{
+			$('#add_book_div').show()
+		}
+	});
+
+	// Adds book to csv dataframe
+	$('#add_book_confirm').click(function(){
+		data = {book_title: $('#add_book_name').val(),
+				book_author: $('#add_book_author').val(),
+				book_genre: $('#add_book_genre').val()}
+		console.log(data)
+		$.ajax({
+			url: "/addbookdata",
+			data: data,
+			type: 'POST',  
+		  	success:function(response){
+				var response = JSON.parse(response);
+				if(response.status == 'FAIL'){
+					alert("This book already exists");
+				}else{
+					getBookData();
+				}
+			},  
+			error: function(e){
+				console.log("Error: ", e)
+			}  
+		});
+	});
+
+	// Shows edit inputs when clicked
+	$('#edit_book').click(function(){
+		if($("#edit_book_confirm").is(":visible")){
+			$('#edit_book_div').hide()
+		}else{
+			$('#edit_book_div').show()
+		}
+	});
+
+	// Edits book in csv dataframe
+	$('#edit_book_confirm').click(function(){
+		data = {book_id: $('#edit_book_id_').val(),
+				book_title: $('#edit_book_title').val(),
+				book_author: $('#edit_book_author').val(),
+				book_genre: $('#edit_book_genre').val()}
+		console.log(data)
+		$.ajax({
+			url: "/editbookdata",
+			data: data,
+			type: 'POST',  
+		  	success:function(response){
+				var response = JSON.parse(response);
+				if(response.status == "FAIL"){
+					alert("Book cannot be edited")
+				}else{
+					getBookData();
+				}
+			},  
+			error: function(e){
+				console.log("Error: ", e)
+			}  
+		});
+	});
+
+	// Gets the book table data
+	function getBookData(){
+		console.log("IN GET DATA")
+		$.ajax({
+			url: "/getBookData",
+			type: "get",
+			success: function(response){
+				var response= JSON.parse(response)
+				buildTable(response, "bookData")
+			},
+			error: function(error){
+				console.log(error)
+			}
+		});
+	}
+
+
+
+	// ******************** //
+	// JSON to HTML table
+	// ******************** //
 
 	function buildTable(data, tableName){
 		//https://www.encodedna.com/javascript/populate-json-data-to-html-table-using-javascript.htm
@@ -199,5 +297,5 @@ $(function(){
 		divContainer.appendChild(table);
 	}
 
-	document.onload = getData();
+	document.onload = getUserData(), getBookData();
 });
