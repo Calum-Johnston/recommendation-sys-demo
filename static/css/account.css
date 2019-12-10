@@ -1,15 +1,57 @@
-th, td, p, input {
-    font:14px Verdana;
-}
+  body {
+    padding-top: 40px;
+    padding-bottom: 40px;
+    width: 100%;
+  }
 
-table, th, td 
-{
+  
+  
+  th, td, p, input {
+    font:14px Verdana;
+  }
+
+  table{
+    margin: 0 auto;
+  }
+
+  table, th, td {
     border: solid 1px #DDD;
     border-collapse: collapse;
     padding: 2px 3px;
     text-align: center;
-}
-
-th {
+  }
+  
+  th {
     font-weight:bold;
-}
+  }
+
+  .form-label-group {
+    position: relative;
+    margin-bottom: 1rem;
+  }
+  
+  .form-label-group input {
+    height: auto;
+    border-radius: 2rem;
+  }
+
+  .btn {
+    font-size: 80%;
+    border-radius: 5rem;
+    letter-spacing: .1rem;
+    font-weight: bold;
+    padding: 1rem;
+    transition: all 0.2s;
+  }
+  
+  .btn-open {
+    color: white;
+    background-color: #ea4335;
+    margin: 0px 0px 10px 0px;
+  }
+  
+  .btn-confirm {
+    color: white;
+    background-color: #3b5998;
+    margin: auto;
+  }

@@ -1,24 +1,24 @@
 $(function(){
-	$('#delete_book_form').hide()
-	$('#edit_book_form').hide()
-	$('#add_book_form').hide()
+	$('.form-delete-book').hide()
+	$('.form-edit-book').hide()
+	$('.form-add-book').hide()
 
-	$('#delete_rating_form').hide()
-	$('#edit_rating_form').hide()
-	$('#add_rating_form').hide()
+	$('.form-delete-rating').hide()
+	$('.form-edit-ratings').hide()
+	$('.form-add-rating').hide()
 
 
 	$('#delete_data').click(function(){
 		if($("#delete_data_confirm").is(":visible")){
-			$('#delete_rating_form').hide()
+			$('.form-delete-rating').hide()
 		}else{
-			$('#delete_rating_form').show()
-			$('#edit_rating_form').hide()
-			$('#add_rating_form').hide()
+			$('.form-delete-rating').show()
+			$('.form-edit-ratings').hide()
+			$('.form-add-rating').hide()
 		}
 	});
 
-	$('#delete_rating_form').on('submit', function(e){
+	$('.form-delete-rating').on('submit', function(e){
 		e.preventDefault();
 		data = {user_id: $('#user_id').text(), book_id: $('#delete_id').val()}
 		console.log(data)
@@ -43,15 +43,15 @@ $(function(){
 
 	$('#add_data').click(function(){
 		if($("#add_data_confirm").is(":visible")){
-			$('#add_rating_form').hide()
+			$('.form-add-rating').hide()
 		}else{
-			$('#add_rating_form').show()
-			$('#delete_rating_form').hide()
-			$('#edit_rating_form').hide()
+			$('.form-add-rating').show()
+			$('.form-delete-rating').hide()
+			$('.form-edit-ratings').hide()
 		}
 	});
 
-	$('#add_rating_form').on('submit', function(e){
+	$('.form-add-rating').on('submit', function(e){
 		e.preventDefault();
 		data = {user_id: $('#user_id').text(), book_id: $('#add_book_id').val(),
 				rating: $('#add_rating_id').val()}
@@ -77,15 +77,15 @@ $(function(){
 
 	$('#edit_data').click(function(){
 		if($("#edit_data_confirm").is(":visible")){
-			$('#edit_rating_form').hide()
+			$('.form-edit-ratings').hide()
 		}else{
-			$('#edit_rating_form').show()
-			$('#delete_rating_form').hide()
-			$('#add_rating_form').hide()
+			$('.form-edit-ratings').show()
+			$('.form-delete-rating').hide()
+			$('.form-add-rating').hide()
 		}
 	});
 
-	$('#edit_rating_form').on('submit', function(e){
+	$('.form-edit-ratings').on('submit', function(e){
 		e.preventDefault();
 		data = {user_id: $('#user_id').text(), book_id: $('#edit_book_id').val(),
 				rating: $('#edit_rating_id').val()}
@@ -150,16 +150,16 @@ $(function(){
 	// Shows delete inputs when clicked
 	$('#delete_book').click(function(){
 		if($("#delete_book_confirm").is(":visible")){
-			$('#delete_book_form').hide()
+			$('.form-delete-book').hide()
 		}else{
-			$('#delete_book_form').show()
-			$('#edit_book_form').hide()
-			$('#add_book_form').hide()
+			$('.form-delete-book').show()
+			$('.form-edit-book').hide()
+			$('.form-add-book').hide()
 		}
 	});
 
 	// Deletes book from csv dataframe
-	$('#delete_book_form').on('submit', function(e){
+	$('.form-delete-book').on('submit', function(e){
 		e.preventDefault();
 		data = {book_id: $('#delete_book_id').val()}
 		console.log(data)
@@ -185,16 +185,16 @@ $(function(){
 	// Shows add inputs when clicked
 	$('#add_book').click(function(){
 		if($("#add_book_confirm").is(":visible")){
-			$('#add_book_form').hide()
+			$('.form-add-book').hide()
 		}else{
-			$('#add_book_form').show()
-			$('#delete_book_form').hide()
-			$('#edit_book_form').hide()
+			$('.form-add-book').show()
+			$('.form-delete-book').hide()
+			$('.form-edit-book').hide()
 		}
 	});
 
 	// Adds book to csv dataframe
-	$('#add_book_form').on('submit', function(e){
+	$('.form-add-book').on('submit', function(e){
 		e.preventDefault();
 		data = {book_title: $('#add_book_name').val(),
 				book_author: $('#add_book_author').val(),
@@ -221,16 +221,16 @@ $(function(){
 	// Shows edit inputs when clicked
 	$('#edit_book').click(function(){
 		if($("#edit_book_confirm").is(":visible")){
-			$('#edit_book_form').hide()
+			$('.form-edit-book').hide()
 		}else{
-			$('#edit_book_form').show()
-			$('#delete_book_form').hide()
-			$('#add_book_form').hide()
+			$('.form-edit-book').show()
+			$('.form-delete-book').hide()
+			$('.form-add-book').hide()
 		}
 	});
 
 	// Edits book in csv dataframe
-	$('#edit_book_form').on('submit', function(e){
+	$('.form-edit-book').on('submit', function(e){
 		e.preventDefault();
 		data = {book_id: $('#edit_book_id_').val(),
 				book_title: $('#edit_book_title').val(),

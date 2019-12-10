@@ -17,121 +17,13 @@
   <body>
 
     <div class="row">
-      <div class="col-sm-6">
-        <div id ="title">
-          <h1>Information for account:<h1 id="user_id">{{data}}</h1></h1>
-        </div>
 
-        <div class="container">
-          <button type="button" name="add_data" id="add_data" class="btn btn-info">Add</button>
-          <button type="button" name="edit_data" id="edit_data" class="btn btn-info">Edit</button>
-          <button type="button" name="delete_data" id="delete_data" class="btn btn-info">Delete</button>
-        </div>
-
-        <div class="container">
-          <form id="add_rating_form">
-            <div>
-              <label for="add_book_id" id="add_book_label">What book would you like to rate?</label>
-              <input type="number" id="add_book_id" name="add_book_id" required>
-            </div> 
-            <div>
-              <label for="add_rating_id" id="add_rating_label">What rating would you like to give it?</label>
-              <input type="number" id="add_rating_id" name="add_rating_id" min="1" max="5" required>
-            </div> 
-            <div>
-              <input type="submit" name="add_data_confirm" id="add_data_confirm" value="Confirm">
-            </div>  
-          </form>
-
-          <form id="edit_rating_form">
-            <div>
-              <label for="edit_book_id" id="edit_book_label">What book would you like the edit the rating of?</label>
-              <input type="number" id="edit_book_id" name="edit_book_id" required>
-            </div>
-            <div>
-              <label for="edit_rating_id" id="edit_rating_label">What is the new rating for that book (1-5)?</label>
-              <input type="number" id="edit_rating_id" name="edit_rating_id" min="1" max="5" required>
-            </div>
-            <div>
-              <input type="submit" name="edit_data_confirm" id="edit_data_confirm" value="Confirm">
-            </div>
-          </form>
-
-          <form id="delete_rating_form">
-            <div>
-              <label for="delete_id" id="delete_label">What book would you like to remove</label>
-              <input type="number" id="delete_id" name="delete_id" required>
-            </div>
-            <div>
-              <input type="submit" name="delete_data_confirm" id="delete_data_confirm" value="Confirm">
-            </div>
-          </form>
-        </div>
+      <div class="col-sm-6" id ="title">
+        <h1 class="text-center">Information for account:<h1 class="text-center" id="user_id">{{data}}</h1></h1><br>
       </div>
 
-      <div class="col-sm-6">
-        <div id="title">
-          <h1>Book database:</h1>
-          <br>
-        </div>
-        
-        <div>
-          <button type="button" name="add_book" id="add_book" class="btn btn-info">Add</button>
-          <button type="button" name="edit_book" id="edit_book" class="btn btn-info">Edit</button>
-          <button type="button" name="delete_book" id="delete_book" class="btn btn-info">Delete</button>
-        </div>
-      
-        <div class="container">
-          <form id="add_book_form">
-            <div>
-              <label for="add_book_name" id="add_book_name_label">What is the book's title?</label>
-              <input type="text" id="add_book_name" name="add_book_name" required autofocus>
-            </div>
-            <div>
-              <label for="add_book_author" id="add_book_author_label">Who is the book's author?</label>
-              <input type="text" id="add_book_author" name="add_book_author" required>
-            </div>
-            <div>
-              <label for="add_book_genre" id="add_book_genre_label">What are the book's genres?</label>
-              <input type="text" id="add_book_genre" name="add_book_genre" required>
-            </div>
-            <div>
-              <input type="submit" name="add_book_confirm" id="add_book_confirm" value="Confirm">
-            </div>
-          </form>
-      
-          <form id="edit_book_form">
-            <div>
-              <label for="edit_book_id_" id="edit_book_id_label">What book would you like to edit? (ID)</label>
-              <input type="number" id="edit_book_id_" name="edit_book_id_" required autofocus>
-            </div>
-            <div>
-              <label for="edit_book_title" id="edit_book_title_label">What is the new title? (if applicable)</label>
-              <input type="text" id="edit_book_title" name="edit_book_title">
-            </div>
-            <div>
-              <label for="edit_book_author" id="edit_book_author_label">Who is the new author? (if applicable)</label>
-              <input type="text" id="edit_book_author" name="edit_book_author">
-            </div>
-            <div>
-              <label for="edit_book_genre" id="edit_book_genre_label">What are the new genre(s) (if applicable)</label>
-              <input type="text" id="edit_book_genre" name="edit_book_genre">
-            </div>  
-            <div>
-              <input type="submit" name="edit_book_confirm" id="edit_book_confirm" value="Confirm">
-            </div>
-          </form>
-      
-          <form id="delete_book_form">
-            <div>
-              <label for="delete_book_id" id="delete_book_id_label">What book would you like to remove? (ID)</label>
-              <input type="number" id="delete_book_id" name="delete_book_id" required autofocus>
-            </div>
-            <div>
-              <input type="submit" name="delete_book_confirm" id="delete_book_confirm" value="Confirm">
-            </div>
-          </form>
-        </div>
+      <div class="col-sm-6"  id="title">
+        <h1 class="text-center">Book database:</h1><br>
       </div>
     </div>
 
@@ -145,9 +37,116 @@
           <table id="userRecommendations"></table>
         </div>
       </div>
+    
       <div class="container col-sm-6">
         <div class="table-responsive">
           <table id="bookData"></table>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-4">
+              <button type="button" name="add_data" id="add_data" class="btn btn-lg btn-confirm text-uppercase btn-block">Add</button>
+            </div>
+            <div class="col-sm-4">
+            <button type="button" name="edit_data" id="edit_data" class="btn btn-lg btn-confirm text-uppercase btn-block">Edit</button>
+            </div>
+            <div class="col-sm-4">
+            <button type="button" name="delete_data" id="delete_data" class="btn btn-lg btn-confirm text-uppercase btn-block">Delete</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="container">
+          <form class="form-add-rating">
+            <div class="form-label-group">
+              <label for="add_book_id">What book would you like to rate?</label>
+              <input type="number" id="add_book_id" name="add_book_id" required>
+            </div> 
+            <div class="form-label-group">
+              <label for="add_rating_id">What rating would you like to give it?</label>
+              <input type="number" id="add_rating_id" name="add_rating_id" min="1" max="5" required>
+            </div> 
+            <button class="btn btn-lg btn-open text-uppercase btn-block" type="submit" id="add_data_confirm">Confirm</button>
+          </form>
+
+          <form class="form-edit-ratings">
+            <div class="form-label-group">
+              <label for="edit_book_id" >What book would you like the edit the rating of?</label>
+              <input type="number" id="edit_book_id" name="edit_book_id" required>
+            </div>
+            <div class="form-label-group">
+              <label for="edit_rating_id" >What is the new rating for that book (1-5)?</label>
+              <input type="number" id="edit_rating_id" name="edit_rating_id" min="1" max="5" required>
+            </div>
+            <button class="btn btn-lg btn-open text-uppercase btn-block" type="submit" id="edit_data_confirm">Confirm</button>
+          </form>
+
+          <form class="form-delete-rating">
+            <div class="form-label-group">
+              <label for="delete_id">What book would you like to remove</label>
+              <input type="number" id="delete_id" name="delete_id" required>
+            </div>
+            <button class="btn btn-lg btn-open text-uppercase btn-block" type="submit" id="delete_data_confirm">Confirm</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="col-sm-6">        
+        <div>
+          <button type="button" name="add_book" id="add_book" class="btn btn-lg btn-confirm text-uppercase btn-block">Add</button>
+          <button type="button" name="edit_book" id="edit_book" class="btn btn-lg btn-confirm text-uppercase btn-block">Edit</button>
+          <button type="button" name="delete_book" id="delete_book" class="btn btn-lg btn-confirm text-uppercase btn-block">Delete</button>
+        </div>
+      
+        <div class="container">
+          <form class="form-add-book">
+            <div class="form-label-group">
+              <label for="add_book_name">What is the book's title?</label>
+              <input type="text" id="add_book_name" name="add_book_name" required autofocus>
+            </div>
+            <div class="form-label-group">
+              <label for="add_book_author">Who is the book's author?</label>
+              <input type="text" id="add_book_author" name="add_book_author" required>
+            </div>
+            <div class="form-label-group">
+              <label for="add_book_genre">What are the book's genres?</label>
+              <input type="text" id="add_book_genre" name="add_book_genre" required>
+            </div>
+            <button class="btn btn-lg btn-open text-uppercase btn-block" type="submit" id="add_book_confirm">Confirm</button>
+          </form>
+      
+          <form class="form-edit-book">
+            <div class="form-label-group">
+              <label for="edit_book_id_">What book would you like to edit? (ID)</label>
+              <input type="number" id="edit_book_id_" name="edit_book_id_" required autofocus>
+            </div>
+            <div class="form-label-group">
+              <label for="edit_book_title">What is the new title? (if applicable)</label>
+              <input type="text" id="edit_book_title" name="edit_book_title">
+            </div>
+            <div class="form-label-group">
+              <label for="edit_book_author">Who is the new author? (if applicable)</label>
+              <input type="text" id="edit_book_author" name="edit_book_author">
+            </div>
+            <div class="form-label-group" class="form-label-group">
+              <label for="edit_book_genre">What are the new genre(s) (if applicable)</label>
+              <input type="text" id="edit_book_genre" name="edit_book_genre">
+            </div>  
+            <button class="btn btn-lg btn-open text-uppercase btn-block" type="submit" id="edit_book_confirm">Confirm</button>
+          </form>
+      
+          <form class="form-delete-book" id="delete_book_form">
+            <div class="form-label-group">
+              <label for="delete_book_id" >What book would you like to remove? (ID)</label>
+              <input type="number" id="delete_book_id" name="delete_book_id" required autofocus>
+            </div>
+            <button class="btn btn-lg btn-open text-uppercase btn-block" type="submit" id="delete_book_confirm">Confirm</button>
+          </form>
         </div>
       </div>
     </div>
