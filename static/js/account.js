@@ -98,7 +98,7 @@ $(function(){
 				if(response.status == "FAIL"){
 					alert("You cannot edit a book you have not yet rated")
 				}else{
-					getData();
+					getUserData();
 				}
 			},  
 			error: function(e){

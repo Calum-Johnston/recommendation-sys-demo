@@ -85,7 +85,7 @@ def addUserData():
     if(ratings[(ratings['user_id'] == int(user)) & (ratings['book_id'] == int(book))].shape[0] == 1):
         return json.dumps({'status':'FAIL'})
 
-    if(int(book) > books.shape[0]):
+    if(books[books['book_id'] == int(book)].shape[0] == 0):
         return json.dumps({'status':'EXISTS'})
 
     ratings.loc[ratings.shape[0]] = [int(user), int(book), int(rating)]
@@ -150,7 +150,7 @@ def addBookData():
 
     global books
 
-    if(books[(books['book_title']) == str(title) & (books['book_author']) == str(author) & (books['book_genre']) == str(genre)].shape[0] == 1):
+    if(books[(books['book_title'] == str(title)) & (books['book_author'] == str(author))].shape[0] == 1):
         return json.dumps({'status':'FAIL'})
 
     previousNum = 0
@@ -158,12 +158,12 @@ def addBookData():
         if(int(row['book_id']) != previousNum + 1):
             before = books[:int(previousNum)]
             after = books[int(previousNum):]
-            before.loc[before.shape[0]] = [int(previousNum + 1), title, author, genre]
+            before.loc[before.shape[0]] = [int(previousNum + 1), author,title, genre]
             books = pd.concat([before, after])
             return json.dumps({'status':'OK'})
         previousNum += 1
 
-    books.loc[books.shape[0]] = [int(books.shape[0] + 1), title, author, genre]
+    books.loc[books.shape[0]] = [int(books.shape[0] + 1), author, title, genre]
     return json.dumps({'status':'OK'})
 
 ###########################################################
