@@ -17,7 +17,7 @@ HOW TO RUN:
 FEATURES:
 Home page:
 - Ability to login to premade account
-- Ability to create account and login with account (NOTE: as long as account number doesn't already exist)
+- Ability to create account and login with account (NOTE: as long as account name doesn't exist)
 
 Account page:
 - Ability to add/edit/remove an account's ratings (once logged in)
@@ -29,3 +29,13 @@ Account page:
 NOTE:
 - System is designed for functionality & features, not user friendliness
 - Although some effort has been made to improve look and ease of use
+
+
+
+
+
+
+To do:
+- Close ADD EDIT DELETE after success
+- Keep testing
+- Change ratings to be more realistic
