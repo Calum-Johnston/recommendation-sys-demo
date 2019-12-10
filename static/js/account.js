@@ -63,6 +63,8 @@ $(function(){
 				var response = JSON.parse(response);
 				if(response.status == 'FAIL'){
 					alert("You have already rated that book!");
+				}else if(response.status == 'EXISTS'){
+					alert("That book does not exist");
 				}else{
 					getUserData();
 				}
@@ -171,6 +173,7 @@ $(function(){
 					alert("That book cannot be deleted as it doesn't exist")
 				}else{
 					getBookData();
+					getUserData();
 				}
 			},  
 			error: function(e){

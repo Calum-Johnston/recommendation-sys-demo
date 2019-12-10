@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 from flask import Flask, render_template, request, json, redirect, url_for
 from scipy.sparse.linalg import svds
+import operator
 
 app = Flask(__name__)
 
@@ -84,6 +85,9 @@ def addUserData():
     if(ratings[(ratings['user_id'] == int(user)) & (ratings['book_id'] == int(book))].shape[0] == 1):
         return json.dumps({'status':'FAIL'})
 
+    if(int(book) > books.shape[0]):
+        return json.dumps({'status':'EXISTS'})
+
     ratings.loc[ratings.shape[0]] = [int(user), int(book), int(rating)]
     print(ratings)
     return json.dumps({'status':'OK'})
@@ -108,11 +112,13 @@ def getBookData():
 @app.route('/deletebookdata', methods=['POST'])
 def deleteBookData():
     book = request.form['book_id']
-    global books
+    global ratings, books
 
     if(books[books['book_id'] == int(book)].shape[0] == 0):
         return json.dumps({'status':'FAIL'})
     
+    ratings = ratings[ratings['book_id'] != int(book)]
+
     books = books[books['book_id'] != int(book)]
     return json.dumps({'status':'OK'})
 
@@ -142,10 +148,22 @@ def addBookData():
     author = request.form['book_author']
     genre = request.form['book_genre']
 
-    if(books[(books['book_title'] == title) & (books['book_author'] == author) & (books['book_genre'] == genre)].shape[0] == 1):
+    global books
+
+    if(books[(books['book_title']) == str(title) & (books['book_author']) == str(author) & (books['book_genre']) == str(genre)].shape[0] == 1):
         return json.dumps({'status':'FAIL'})
-    print(title, author, genre)
-    books.loc[ratings.shape[0]] = [int(books.shape[0] + 1), title, author, genre]
+
+    previousNum = 0
+    for index, row in books.iterrows():
+        if(int(row['book_id']) != previousNum + 1):
+            before = books[:int(previousNum)]
+            after = books[int(previousNum):]
+            before.loc[before.shape[0]] = [int(previousNum + 1), title, author, genre]
+            books = pd.concat([before, after])
+            return json.dumps({'status':'OK'})
+        previousNum += 1
+
+    books.loc[books.shape[0]] = [int(books.shape[0] + 1), title, author, genre]
     return json.dumps({'status':'OK'})
 
 ###########################################################
