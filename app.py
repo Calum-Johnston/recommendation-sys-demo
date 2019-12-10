@@ -27,9 +27,9 @@ def signInUser():
 def signUpUser():
     user = request.form['username']
     password = request.form['password']
-    if(users[users['user_name'] == int(user)].shape[0] == 1):
+    if(users[users['user_name'] == str(user)].shape[0] == 1):
         return json.dumps({'status':'EXIST'})
-    users.loc[users.shape[0]] = [users.shape[0] + 1, int(user), password]
+    users.loc[users.shape[0] + 1] = [users.shape[0] + 1, str(user), password]
     return json.dumps({'status':'OK'})
 
 
@@ -174,7 +174,7 @@ def addBookData():
 ## RECOMMEND BOOKS ## 
 @app.route('/recommend', methods=['POST'])
 def recommend():
-    user = request.form['user_id'] 
+    user = getUserID(request.form['user_name'])
     # Check user has rated something
     print(ratings)
     if(ratings[ratings['user_id'] == int(user)].shape[0] != 0):
@@ -201,6 +201,7 @@ def deleteAccount():
     for index, row in ratings.iterrows():
         if(row['user_id'] > int(user)):
             ratings.loc[index, 'user_id'] = int(row['user_id'] - 1)
+    
 
     return json.dumps({'status':'OK'})
 

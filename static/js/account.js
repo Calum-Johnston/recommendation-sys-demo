@@ -127,7 +127,7 @@ $(function(){
 
 	// Gets recommendations
 	$('#recommend_data').click(function(){
-		data = {user_id: $('#user_id').text()}
+		data = {user_name: $('#user_id').text()}
 		$.ajax({
 			url: "/recommend",
 			data: data,
