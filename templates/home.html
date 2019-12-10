@@ -6,11 +6,11 @@
 
     <title>Web Technology Coursework</title>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <!--<link href="static/css/signup.css" rel="stylesheet">-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link href="static/css/home.css" rel="stylesheet">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> 
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="static/js/home.js"></script>
   </head>
   
@@ -18,38 +18,46 @@
 
     
     <div class="container">
-      <form id="signin_form">
-        <h2>Sign in</h2>
-        <div>
-          <label class="title">Username</label>
-          <input type="text" id="signin_username" name="username" class="form-control" required autofocus>
-        </div>
-        <div>
-          <label class="title">Password</label>
-          <input type="password" id="signin_password" name="password" class="form-control" required>       
-        </div>
-        <div>
-          <input type="submit" id="signin_submit" name="submitButton" value="Sign in">
-        </div>
-      </form>   
-    </div> 
+      <div class="row">
+        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+          <div class="card card-sign">
+            <div class="card-body">
+              <div class="div-signin">
+                <h2 class="card-title text-center">Sign in</h2>
+                <form class="form-signin">
+                  <div class="form-label-group">
+                    <label for="signin-username">Username</label>
+                    <input type="text" id="signin-username" name="username" class="form-control" required autofocus>
+                  </div>
+                  <div class="form-label-group">
+                    <label for="signin-password">Password</label>
+                    <input type="password" id="signin-password" name="password" class="form-control" required>       
+                  </div>
+                  <button class="btn btn-lg btn-signin text-uppercase btn-block" type="submit" id="signin-button">Sign in</button>
+                </form>   
+              </div>
 
-    <div class="container">
-      <form id="signup_form">
-        <h2>Sign in</h2>
-        <div>
-          <label class="title">Username</label>
-          <input type="text" id="signup_username" name="username" class="form-control" required autofocus readonly>
+              <button class="btn btn-lg btn-signup text-uppercase btn-block" type="button" id="signup-call-button">Sign up</button>
+              
+              <div class="div-signup">
+                <h2 class="card-title text-center">Sign up</h2>
+                <form class="form-signup">
+                  <div class="form-label-group">
+                    <label for="signup-username">Username (default)</label>
+                    <input type="text" id="signup-username" name="username" class="form-control" required autofocus readonly>
+                  </div>
+                  <div class="form-label-group">
+                    <label for="signup-password">Enter a password</label>
+                    <input type="password" id="signup-password" name="password" class="form-control" required>       
+                  </div>
+                  <button class="btn btn-lg btn-signup text-uppercase btn-block" type="submit" id="signup-button">Sign up</button>
+                </form>
+              </div>
+            </div>
+          </div>
         </div>
-        <div>
-          <label class="title">Password</label>
-          <input type="password" id="signup_password" name="password" class="form-control" required>       
-        </div>
-        <div>
-          <input type="submit" id="signup_submit" name="submitButton" value="Sign in">
-        </div>
-      </form>   
-    </div> 
+      </div> 
+    </div>
 
   </body>
  

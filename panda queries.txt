@@ -7,3 +7,6 @@ Still to do:
 - Formatting issues
 - Improve overall design
 - Reorder indexes when deleted values
+- Improve data values
+
+Adding book (CHECK book exists first)

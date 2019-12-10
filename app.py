@@ -15,8 +15,8 @@ def index():
 
 @app.route('/signInUser', methods=['POST'])
 def signInUser():
-    user =  request.form['username'];
-    password = request.form['password'];
+    user =  request.form['username']
+    password = request.form['password']
     for indexes, row in users.iterrows():
         if(str(row['user_id']) == str(user) and str(row['user_password']) == str(password)):
             return json.dumps({'status':'OK','user':user,'pass':password});
@@ -151,6 +151,7 @@ def addBookData():
 ###########################################################
 # ADDITIONAL FUNCTIONS
 ###########################################################
+# Builds the recommendation table
 def getRecommendationsTable(user):
     # Format ratings matrix s.t. one row per user & one column per book
     R_df = ratings.pivot(index = 'user_id', columns ='book_id', values = 'rating').fillna(0)
@@ -162,7 +163,7 @@ def getRecommendationsTable(user):
     R_demeaned = R - user_ratings_mean.reshape(-1, 1)
 
     # Perform matrix factorisation via single value decomposition
-    U, sigma, Vt = svds(R_demeaned, k = min(R_demeaned.shape[0] - 1, 50))
+    U, sigma, Vt = svds(R_demeaned, k = min(R_demeaned.shape[1] - 1, 50))
 
     # Convert diagonal values in sigma to matrix form
     sigma = np.diag(sigma)  
@@ -173,8 +174,9 @@ def getRecommendationsTable(user):
     preds_df = pd.DataFrame(all_user_predicted_ratings, columns = R_df.columns)
 
     return preds_df
+    
 
-
+# Recommends the user books
 def recommendBooks(predictions_df, user, num_recommendations=5):
     # Get and sort the user's predictions
     user_row_number = int(user) - 1 # UserID starts at 1, not 0
