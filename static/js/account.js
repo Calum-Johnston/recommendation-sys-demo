@@ -10,7 +10,7 @@ $(function(){
 
 	$('#delete-account').click(function(e){
 		e.preventDefault();
-		data = {user_id: $('#user_id').text()}
+		data = {user_name: $('#user_id').text()}
 		console.log(data)
 		$.ajax({
 			url: "/deleteaccount",
@@ -38,7 +38,7 @@ $(function(){
 
 	$('.form-delete-rating').on('submit', function(e){
 		e.preventDefault();
-		data = {user_id: $('#user_id').text(), book_id: $('#delete_id').val()}
+		data = {user_name: $('#user_id').text(), book_id: $('#delete_id').val()}
 		console.log(data)
 		$.ajax({
 			url: "/deleteuserdata",
@@ -64,14 +64,14 @@ $(function(){
 			$('.form-add-rating').hide()
 		}else{
 			$('.form-add-rating').show()
-			$('.f4orm-delete-rating').hide()
+			$('.form-delete-rating').hide()
 			$('.form-edit-ratings').hide()
 		}
 	});
 
 	$('.form-add-rating').on('submit', function(e){
 		e.preventDefault();
-		data = {user_id: $('#user_id').text(), book_id: $('#add_book_id').val(),
+		data = {user_name: $('#user_id').text(), book_id: $('#add_book_id').val(),
 				rating: $('#add_rating_id').val()}
 		$.ajax({
 			url: "/adduserdata",
@@ -105,7 +105,7 @@ $(function(){
 
 	$('.form-edit-ratings').on('submit', function(e){
 		e.preventDefault();
-		data = {user_id: $('#user_id').text(), book_id: $('#edit_book_id').val(),
+		data = {user_name: $('#user_id').text(), book_id: $('#edit_book_id').val(),
 				rating: $('#edit_rating_id').val()}
 		$.ajax({
 			url: "/edituserdata",
@@ -137,6 +137,7 @@ $(function(){
 				buildTable(response, "userRecommendations")
 			},  
 			error: function(e){
+				alert("You have not yet rated anything")
 				console.log("Error: ", e)
 			}  
 		});
@@ -148,7 +149,7 @@ $(function(){
 			url: "/getUserRatings",
 			type: "get",
 			data: {
-				user_id: $('#user_id').text(),
+				user_name: $('#user_id').text(),
 			},
 			success: function(response){
 				var response= JSON.parse(response)

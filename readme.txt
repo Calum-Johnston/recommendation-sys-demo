@@ -15,12 +15,17 @@ HOW TO RUN:
 
 
 FEATURES:
-
 Home page:
 - Ability to login to premade account
-- Ability to create account and login with account (NOTE: account numbers are fixed - you cannot decide it)
+- Ability to create account and login with account (NOTE: as long as account number doesn't already exist)
 
 Account page:
 - Ability to add/edit/remove an account's ratings (once logged in)
 - Ability to add/edit/remove a book's information (once logged in)
 - Ability to generate recommended books based on account's current ratings (once logged in)
+- Ability to delete account (once logged in)
+
+
+NOTE:
+- System is designed for functionality & features, not user friendliness
+- Although some effort has been made to improve look and ease of use

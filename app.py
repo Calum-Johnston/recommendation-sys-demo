@@ -19,7 +19,7 @@ def signInUser():
     user =  request.form['username']
     password = request.form['password']
     for indexes, row in users.iterrows():
-        if(str(row['user_id']) == str(user) and str(row['user_password']) == str(password)):
+        if(str(row['user_name']) == str(user) and str(row['user_password']) == str(password)):
             return json.dumps({'status':'OK','user':user,'pass':password});
     return json.dumps({'status':'FAIL','user':user,'pass':password});
 
@@ -27,10 +27,9 @@ def signInUser():
 def signUpUser():
     user = request.form['username']
     password = request.form['password']
-    print(users[users['user_id'] == int(user)])
-    if(users[users['user_id'] == int(user)].shape[0] == 1):
+    if(users[users['user_name'] == int(user)].shape[0] == 1):
         return json.dumps({'status':'EXIST'})
-    users.loc[users.shape[0]] = [int(user), password]
+    users.loc[users.shape[0]] = [users.shape[0] + 1, int(user), password]
     return json.dumps({'status':'OK'})
 
 
@@ -42,9 +41,15 @@ def signUpUser():
 def account():
     return render_template('account.html', data=request.args.get('user_id'))
 
+def getUserID(user):
+    global users
+    for index, row in users.iterrows():
+        if(row['user_name'] == str(user)):
+            return row['user_id']
+
 @app.route('/getUserRatings')
 def getUserRatings():
-    user = request.args.get('user_id')
+    user = getUserID(request.args.get('user_name'))
     userRatings = ratings[ratings['user_id'] == int(user)]
     del userRatings['user_id']
     userBooks = pd.merge(books, userRatings, on='book_id')
@@ -54,7 +59,7 @@ def getUserRatings():
 
 @app.route('/deleteuserdata', methods=['POST'])
 def deleteUserData():
-    user = request.form['user_id']
+    user = getUserID(request.form['user_name'])
     book = request.form['book_id']
 
     global ratings
@@ -67,7 +72,7 @@ def deleteUserData():
 
 @app.route('/edituserdata', methods=['POST'])
 def editUserData():
-    user = request.form['user_id']
+    user = getUserID(request.form['user_name'])
     book = request.form['book_id']
     rating = request.form['rating']
 
@@ -82,7 +87,7 @@ def editUserData():
 
 @app.route('/adduserdata', methods=['POST'])
 def addUserData():
-    user = request.form['user_id']
+    user = getUserID(request.form['user_name'])
     book = request.form['book_id']
     rating = request.form['rating']
 
@@ -97,15 +102,6 @@ def addUserData():
     ratings.loc[ratings.shape[0]] = [int(user), int(book), int(rating)]
     print(ratings)
     return json.dumps({'status':'OK'})
-
-@app.route('/recommend', methods=['POST'])
-def recommend():
-   user = request.form['user_id'] 
-   preds_df = getRecommendationsTable(user)
-   already_rated, predictions = recommendBooks(preds_df, user, 5)
-   return predictions.to_json(orient='records')
-
-
 
 @app.route('/books')
 def books():
@@ -175,13 +171,37 @@ def addBookData():
     return json.dumps({'status':'OK'})
 
 
+## RECOMMEND BOOKS ## 
+@app.route('/recommend', methods=['POST'])
+def recommend():
+    user = request.form['user_id'] 
+    # Check user has rated something
+    print(ratings)
+    if(ratings[ratings['user_id'] == int(user)].shape[0] != 0):
+        preds_df = getRecommendationsTable(user)
+        already_rated, predictions = recommendBooks(preds_df, user, 5)
+        return predictions.to_json(orient='records')
+
+
 ## DELETE AN ACCOUNT ##
 @app.route('/deleteaccount', methods=['POST'])
 def deleteAccount():
-    user = request.form['user_id']
+    user = getUserID(request.form['user_name'])
     global users, ratings
+
+    # Remove user from users and update user_ids for other users
     users = users[users['user_id'] != int(user)]
+    # Update indexes for users affected
+    for index, row in users.iterrows():
+        if(row['user_id'] > int(user)):
+            users.loc[index, 'user_id'] = int(row['user_id'] - 1)
+
+    # Remove user ratings from ratings and update user_ids in ratings
     ratings = ratings[ratings['user_id'] != int(user)]
+    for index, row in ratings.iterrows():
+        if(row['user_id'] > int(user)):
+            ratings.loc[index, 'user_id'] = int(row['user_id'] - 1)
+
     return json.dumps({'status':'OK'})
 
 
@@ -193,6 +213,7 @@ def deleteAccount():
 def getRecommendationsTable(user):
     # Format ratings matrix s.t. one row per user & one column per book
     R_df = ratings.pivot(index = 'user_id', columns ='book_id', values = 'rating').fillna(0)
+    print(R_df)
 
     # De-mean the data (normalize by each user's mean)
     R = R_df.values
