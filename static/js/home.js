@@ -9,12 +9,6 @@ $(function(){
 		$("#signup-call-button").hide()
 	});
 
-	// Gets the next user ID (for account creation)
-	$.get('/getNextUserID', function(result){
-		console.log(result)
-		$('#signup-username').val(result)
-	});
-
 	// Validates whether the login was successful
 	$(".form-signin").on('submit', function(e){
 		e.preventDefault()
@@ -56,8 +50,8 @@ $(function(){
 					alert("Account created - redirecting to account page")
 					window.location.replace("/account?user_id=" + $('#signup-username').val())
 				}else{
-					alert("User already exists - please try again")
-				}			
+					alert("User already exists - please try again")		
+				}
 			},
 			error: function(error){
 				console.log(error);

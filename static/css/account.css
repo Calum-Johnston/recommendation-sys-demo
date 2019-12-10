@@ -3,8 +3,6 @@
     padding-bottom: 40px;
     width: 100%;
   }
-
-  
   
   th, td, p, input {
     font:14px Verdana;
@@ -23,6 +21,33 @@
   
   th {
     font-weight:bold;
+  }
+
+  .table-user {
+    height: 15em; 
+  }
+
+  .table-recommendations {
+    height: 10em;
+  }
+
+  .table-books {
+    height: 29em;
+  }
+
+  .table-user, .table-books, .table-recommendations {
+    overflow: auto;
+    margin: 0px 0px 10px 0px
+  }
+  
+  .forms-ratings, .form-books{
+    border: 1px solid #111111;
+    border-radius: 1rem;
+    box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
+    font-weight: 300;
+    font-size: 1.5rem;
+    margin: 10px 0px 0px 0px;
+    padding: 2rem;
   }
 
   .form-label-group {
@@ -47,11 +72,24 @@
   .btn-open {
     color: white;
     background-color: #ea4335;
-    margin: 0px 0px 10px 0px;
+    
   }
   
   .btn-confirm {
     color: white;
     background-color: #3b5998;
-    margin: auto;
+    margin: auto;   
+  }
+
+  .btn-open:hover {
+    font-size: 25px;
+  }
+
+  button:focus {
+    color: #111111;
+  }
+
+  .btn-recommend {
+    margin: 0px 0px 10px 0px;
+    transition: all 0.2s;
   }

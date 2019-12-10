@@ -18,8 +18,12 @@
 
     <div class="row">
 
-      <div class="col-sm-6" id ="title">
-        <h1 class="text-center">Information for account:<h1 class="text-center" id="user_id">{{data}}</h1></h1><br>
+      <div class="col-sm-4" id ="title">
+        <h1 class="text-center">Information for account: <span class="text-center" id="user_id">{{data}}</span></h1><br>
+      </div>
+
+      <div class="col-sm-2">
+        <button type="button" name="delete-account" id="delete-account" class="btn btn-danger btn-delete">Delete account</button>
       </div>
 
       <div class="col-sm-6"  id="title">
@@ -29,17 +33,19 @@
 
     <div class="row">
       <div class="container col-sm-6">
-        <div class="table-responsive">
+        <div class="table-responsive table-user">
           <table id="userData"></table>
         </div>
-        <div>
-          <button type="button" name="recommend_data" id="recommend_data" class="btn btn-info">Recommend me!</button>
+        <div class="text-center">
+          <button type="button" name="recommend_data" id="recommend_data" class="btn btn-info btn-recommend">Recommend me!</button>
+        </div>
+        <div class="table-responsive table-recommendations">
           <table id="userRecommendations"></table>
         </div>
       </div>
     
       <div class="container col-sm-6">
-        <div class="table-responsive">
+        <div class="table-responsive table-books">
           <table id="bookData"></table>
         </div>
       </div>
@@ -62,7 +68,7 @@
         </div>
 
         <div class="container">
-          <form class="form-add-rating">
+          <form class="form-add-rating forms-ratings">
             <div class="form-label-group">
               <label for="add_book_id">What book would you like to rate?</label>
               <input type="number" id="add_book_id" name="add_book_id" required>
@@ -74,7 +80,7 @@
             <button class="btn btn-lg btn-open text-uppercase btn-block" type="submit" id="add_data_confirm">Confirm</button>
           </form>
 
-          <form class="form-edit-ratings">
+          <form class="form-edit-ratings forms-ratings">
             <div class="form-label-group">
               <label for="edit_book_id" >What book would you like the edit the rating of?</label>
               <input type="number" id="edit_book_id" name="edit_book_id" required>
@@ -86,7 +92,7 @@
             <button class="btn btn-lg btn-open text-uppercase btn-block" type="submit" id="edit_data_confirm">Confirm</button>
           </form>
 
-          <form class="form-delete-rating">
+          <form class="form-delete-rating forms-ratings">
             <div class="form-label-group">
               <label for="delete_id">What book would you like to remove</label>
               <input type="number" id="delete_id" name="delete_id" required>
@@ -97,14 +103,22 @@
       </div>
 
       <div class="col-sm-6">        
-        <div>
-          <button type="button" name="add_book" id="add_book" class="btn btn-lg btn-confirm text-uppercase btn-block">Add</button>
-          <button type="button" name="edit_book" id="edit_book" class="btn btn-lg btn-confirm text-uppercase btn-block">Edit</button>
-          <button type="button" name="delete_book" id="delete_book" class="btn btn-lg btn-confirm text-uppercase btn-block">Delete</button>
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-4">
+              <button type="button" name="add_book" id="add_book" class="btn btn-lg btn-confirm text-uppercase btn-block">Add</button>
+            </div>
+            <div class="col-sm-4">
+              <button type="button" name="edit_book" id="edit_book" class="btn btn-lg btn-confirm text-uppercase btn-block">Edit</button>
+            </div>
+            <div class="col-sm-4">
+              <button type="button" name="delete_book" id="delete_book" class="btn btn-lg btn-confirm text-uppercase btn-block">Delete</button>
+            </div>
+          </div>
         </div>
       
         <div class="container">
-          <form class="form-add-book">
+          <form class="form-add-book form-books">
             <div class="form-label-group">
               <label for="add_book_name">What is the book's title?</label>
               <input type="text" id="add_book_name" name="add_book_name" required autofocus>
@@ -120,7 +134,7 @@
             <button class="btn btn-lg btn-open text-uppercase btn-block" type="submit" id="add_book_confirm">Confirm</button>
           </form>
       
-          <form class="form-edit-book">
+          <form class="form-edit-book form-books">
             <div class="form-label-group">
               <label for="edit_book_id_">What book would you like to edit? (ID)</label>
               <input type="number" id="edit_book_id_" name="edit_book_id_" required autofocus>
@@ -140,7 +154,7 @@
             <button class="btn btn-lg btn-open text-uppercase btn-block" type="submit" id="edit_book_confirm">Confirm</button>
           </form>
       
-          <form class="form-delete-book" id="delete_book_form">
+          <form class="form-delete-book form-books">
             <div class="form-label-group">
               <label for="delete_book_id" >What book would you like to remove? (ID)</label>
               <input type="number" id="delete_book_id" name="delete_book_id" required autofocus>

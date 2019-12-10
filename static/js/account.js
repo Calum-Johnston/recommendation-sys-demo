@@ -8,6 +8,24 @@ $(function(){
 	$('.form-add-rating').hide()
 
 
+	$('#delete-account').click(function(e){
+		e.preventDefault();
+		data = {user_id: $('#user_id').text()}
+		console.log(data)
+		$.ajax({
+			url: "/deleteaccount",
+			data: data,
+			type: 'POST',  
+		  	success:function(response){
+				alert("Account successfully deleted")
+				window.location.replace('/')
+			},  
+			error: function(e){
+				console.log("Error: ", e)
+			}  
+		});
+	})
+
 	$('#delete_data').click(function(){
 		if($("#delete_data_confirm").is(":visible")){
 			$('.form-delete-rating').hide()
@@ -46,7 +64,7 @@ $(function(){
 			$('.form-add-rating').hide()
 		}else{
 			$('.form-add-rating').show()
-			$('.form-delete-rating').hide()
+			$('.f4orm-delete-rating').hide()
 			$('.form-edit-ratings').hide()
 		}
 	});

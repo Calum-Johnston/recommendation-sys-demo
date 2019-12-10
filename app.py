@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 
 ###########################################################
-# MAIN FUNCTIONS
+# HOMEPAGE FUNCTIONS
 ###########################################################
 @app.route("/")
 def index():
@@ -27,16 +27,17 @@ def signInUser():
 def signUpUser():
     user = request.form['username']
     password = request.form['password']
+    print(users[users['user_id'] == int(user)])
+    if(users[users['user_id'] == int(user)].shape[0] == 1):
+        return json.dumps({'status':'EXIST'})
     users.loc[users.shape[0]] = [int(user), password]
     return json.dumps({'status':'OK'})
 
-@app.route('/getNextUserID')
-def getNextUserID():
-    return str(users.shape[0] + 1)
 
 
-
-# Displays user information once logged in
+###########################################################
+# ACCOUNT PAGE FUNCTIONS
+###########################################################
 @app.route('/account')
 def account():
     return render_template('account.html', data=request.args.get('user_id'))
@@ -55,6 +56,7 @@ def getUserRatings():
 def deleteUserData():
     user = request.form['user_id']
     book = request.form['book_id']
+
     global ratings
 
     if(ratings[(ratings['user_id'] == int(user)) & (ratings['book_id'] == int(book))].shape[0] == 0):
@@ -69,6 +71,8 @@ def editUserData():
     book = request.form['book_id']
     rating = request.form['rating']
 
+    global ratings
+
     if(ratings[(ratings['user_id'] == int(user)) & (ratings['book_id'] == int(book))].shape[0] == 0):
         return json.dumps({'status':'FAIL'})
 
@@ -81,6 +85,8 @@ def addUserData():
     user = request.form['user_id']
     book = request.form['book_id']
     rating = request.form['rating']
+
+    global ratings
 
     if(ratings[(ratings['user_id'] == int(user)) & (ratings['book_id'] == int(book))].shape[0] == 1):
         return json.dumps({'status':'FAIL'})
@@ -129,6 +135,8 @@ def editBookData():
     author = request.form['book_author']
     genre = request.form['book_genre']
 
+    global books
+
     if(books[books['book_id'] == int(book)].shape[0] == 0):
         return json.dumps({'status':'FAIL'})
 
@@ -166,8 +174,20 @@ def addBookData():
     books.loc[books.shape[0]] = [int(books.shape[0] + 1), author, title, genre]
     return json.dumps({'status':'OK'})
 
+
+## DELETE AN ACCOUNT ##
+@app.route('/deleteaccount', methods=['POST'])
+def deleteAccount():
+    user = request.form['user_id']
+    global users, ratings
+    users = users[users['user_id'] != int(user)]
+    ratings = ratings[ratings['user_id'] != int(user)]
+    return json.dumps({'status':'OK'})
+
+
+
 ###########################################################
-# ADDITIONAL FUNCTIONS
+# RECOMMENDATION FUNCTIONS
 ###########################################################
 # Builds the recommendation table
 def getRecommendationsTable(user):
@@ -179,9 +199,10 @@ def getRecommendationsTable(user):
     user_ratings_mean = np.mean(R, axis = 1)
     # Convert dataframe to numpy array
     R_demeaned = R - user_ratings_mean.reshape(-1, 1)
+    print(R_demeaned.shape)
 
     # Perform matrix factorisation via single value decomposition
-    U, sigma, Vt = svds(R_demeaned, k = min(R_demeaned.shape[1] - 1, 50))
+    U, sigma, Vt = svds(R_demeaned, k = min(R_demeaned.shape[0] - 1, R_demeaned.shape[1] - 1, 50))
 
     # Convert diagonal values in sigma to matrix form
     sigma = np.diag(sigma)  
@@ -205,6 +226,7 @@ def recommendBooks(predictions_df, user, num_recommendations=5):
     user_full = (user_data.merge(books, how = 'left', left_on = 'book_id', right_on = 'book_id').
                      sort_values(['rating'], ascending=False)
                  )
+    print(user_full)
     
     # Recommend the highest predicted rating movies that the user hasn't seen yet.
     recommendations = (books[~books['book_id'].isin(user_full['book_id'])].
