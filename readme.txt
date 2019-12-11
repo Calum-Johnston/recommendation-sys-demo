@@ -12,6 +12,7 @@ Python modules:
 HOW TO RUN:
 - Run the file app.py
 - Navigate to http://localhost:5000/
+- Accounts (a-j) are pre-defined with ratings, with corresponding passwords as their position in the alphabet (i.e. a = 1, b = 2, etc)
 
 
 FEATURES:
@@ -38,4 +39,8 @@ NOTE:
 To do:
 - Close ADD EDIT DELETE after success
 - Keep testing
-- Change ratings to be more realistic
+-
+
+- For each user:
+- Update ratings so users have read books of two genres
+- For each genre, ensure the user leaves out one boko

@@ -53,7 +53,6 @@ def getUserRatings():
     userRatings = ratings[ratings['user_id'] == int(user)]
     del userRatings['user_id']
     userBooks = pd.merge(books, userRatings, on='book_id')
-    del userBooks['book_genre']
     userBooks = userBooks.sort_values(by='book_id')
     return userBooks.to_json(orient='records')
 
@@ -99,8 +98,7 @@ def addUserData():
     if(books[books['book_id'] == int(book)].shape[0] == 0):
         return json.dumps({'status':'EXISTS'})
 
-    ratings.loc[ratings.shape[0]] = [int(user), int(book), int(rating)]
-    print(ratings)
+    ratings.loc[ratings.shape[0] + 1] = [int(user), int(book), int(rating)] 
     return json.dumps({'status':'OK'})
 
 @app.route('/books')
@@ -175,8 +173,9 @@ def addBookData():
 @app.route('/recommend', methods=['POST'])
 def recommend():
     user = getUserID(request.form['user_name'])
-    # Check user has rated something
+    print(user)
     print(ratings)
+    # Check user has rated something
     if(ratings[ratings['user_id'] == int(user)].shape[0] != 0):
         preds_df = getRecommendationsTable(user)
         already_rated, predictions = recommendBooks(preds_df, user, 5)
@@ -201,7 +200,6 @@ def deleteAccount():
     for index, row in ratings.iterrows():
         if(row['user_id'] > int(user)):
             ratings.loc[index, 'user_id'] = int(row['user_id'] - 1)
-    
 
     return json.dumps({'status':'OK'})
 
@@ -214,14 +212,12 @@ def deleteAccount():
 def getRecommendationsTable(user):
     # Format ratings matrix s.t. one row per user & one column per book
     R_df = ratings.pivot(index = 'user_id', columns ='book_id', values = 'rating').fillna(0)
-    print(R_df)
 
     # De-mean the data (normalize by each user's mean)
     R = R_df.values
     user_ratings_mean = np.mean(R, axis = 1)
     # Convert dataframe to numpy array
     R_demeaned = R - user_ratings_mean.reshape(-1, 1)
-    print(R_demeaned.shape)
 
     # Perform matrix factorisation via single value decomposition
     U, sigma, Vt = svds(R_demeaned, k = min(R_demeaned.shape[0] - 1, R_demeaned.shape[1] - 1, 50))
@@ -248,7 +244,6 @@ def recommendBooks(predictions_df, user, num_recommendations=5):
     user_full = (user_data.merge(books, how = 'left', left_on = 'book_id', right_on = 'book_id').
                      sort_values(['rating'], ascending=False)
                  )
-    print(user_full)
     
     # Recommend the highest predicted rating movies that the user hasn't seen yet.
     recommendations = (books[~books['book_id'].isin(user_full['book_id'])].
