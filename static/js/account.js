@@ -49,8 +49,9 @@ $(function(){
 				if(response.status == "FAIL"){
 					console.log("hi")
 					alert("That book cannot be deleted as it hasn't been rated")
-				}else{
+				}else{	
 					getUserData();
+					$("#recommend").html("True")
 				}
 			},  
 			error: function(e){
@@ -85,6 +86,7 @@ $(function(){
 					alert("That book does not exist");
 				}else{
 					getUserData();
+					$("#recommend").html("True")
 				}
 			},  
 			error: function(e){
@@ -117,6 +119,7 @@ $(function(){
 					alert("You cannot edit a book you have not yet rated")
 				}else{
 					getUserData();
+					$("#recommend").html("True")
 				}
 			},  
 			error: function(e){
@@ -127,20 +130,27 @@ $(function(){
 
 	// Gets recommendations
 	$('#recommend_data').click(function(){
-		data = {user_name: $('#user_id').text()}
-		$.ajax({
-			url: "/recommend",
-			data: data,
-			type: 'POST',  
-		  	success:function(response){
-				var response = JSON.parse(response);
-				buildTable(response, "userRecommendations")
-			},  
-			error: function(e){
-				alert("You have not yet rated anything")
-				console.log("Error: ", e)
-			}  
-		});
+		update = $("#recommend").html();
+		if(String(update) == "True"){
+			data = {user_name: $('#user_id').text()}
+			$.ajax({
+				url: "/recommend",
+				data: data,
+				type: 'POST',  
+				success:function(response){
+					var response = JSON.parse(response);
+					buildTable(response, "userRecommendations")
+					$("#recommend").html("False")
+				},  
+				error: function(e){
+					alert("You have not yet rated anything")
+					console.log("Error: ", e)
+				}  
+			});
+		}
+		else{
+			alert("You already have recommendations for your current ratings")
+		}
 	});
 
 	// Gets the user table data
