@@ -37,10 +37,5 @@ NOTE:
 
 
 To do:
-- Close ADD EDIT DELETE after success
-- Keep testing
--
-
-- For each user:
-- Update ratings so users have read books of two genres
-- For each genre, ensure the user leaves out one boko
+- Reduce number of books to 10
+- Reduce number of genres to 5
