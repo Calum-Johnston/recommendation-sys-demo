@@ -1,7 +1,6 @@
 REQUIREMENTS:
-- All files in the same folders as downloade
+- All the files are in the same folders as downloaded
 - Python 3.7.4 (or above) installed
-
 Python modules:
 - Flask 1.1.1 (or above) installed
 - Numpy 1.17.3 (or above) installed
@@ -17,9 +16,8 @@ HOW TO RUN:
 
 FEATURES:
 Home page:
-- Ability to login to premade account
+- Ability to login to pre-made account
 - Ability to create account and login with account (NOTE: as long as account name doesn't exist)
-
 Account page:
 - Ability to add/edit/remove an account's ratings (once logged in)
 - Ability to add/edit/remove a book's information (once logged in)
@@ -30,12 +28,4 @@ Account page:
 NOTE:
 - System is designed for functionality & features, not user friendliness
 - Although some effort has been made to improve look and ease of use
-
-
-
-
-
-
-To do:
-- Reduce number of books to 10
-- Reduce number of genres to 5
+- Ratings pre-determined were randomly generated and share no correlation

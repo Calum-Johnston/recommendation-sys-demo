@@ -11,7 +11,6 @@ $(function(){
 	$('#delete-account').click(function(e){
 		e.preventDefault();
 		data = {user_name: $('#user_id').text()}
-		console.log(data)
 		$.ajax({
 			url: "/deleteaccount",
 			data: data,
@@ -39,7 +38,6 @@ $(function(){
 	$('.form-delete-rating').on('submit', function(e){
 		e.preventDefault();
 		data = {user_name: $('#user_id').text(), book_id: $('#delete_id').val()}
-		console.log(data)
 		$.ajax({
 			url: "/deleteuserdata",
 			data: data,
@@ -47,7 +45,6 @@ $(function(){
 		  	success:function(response){
 				var response = JSON.parse(response)
 				if(response.status == "FAIL"){
-					console.log("hi")
 					alert("That book cannot be deleted as it hasn't been rated")
 				}else{	
 					getUserData();
@@ -191,7 +188,6 @@ $(function(){
 	$('.form-delete-book').on('submit', function(e){
 		e.preventDefault();
 		data = {book_id: $('#delete_book_id').val()}
-		console.log(data)
 		$.ajax({
 			url: "/deletebookdata",
 			data: data,
@@ -228,7 +224,6 @@ $(function(){
 		data = {book_title: $('#add_book_name').val(),
 				book_author: $('#add_book_author').val(),
 				book_genre: $('#add_book_genre').val()}
-		console.log(data)
 		$.ajax({
 			url: "/addbookdata",
 			data: data,
@@ -265,7 +260,6 @@ $(function(){
 				book_title: $('#edit_book_title').val(),
 				book_author: $('#edit_book_author').val(),
 				book_genre: $('#edit_book_genre').val()}
-		console.log(data)
 		$.ajax({
 			url: "/editbookdata",
 			data: data,
@@ -286,7 +280,6 @@ $(function(){
 
 	// Gets the book table data
 	function getBookData(){
-		console.log("IN GET DATA")
 		$.ajax({
 			url: "/getBookData",
 			type: "get",

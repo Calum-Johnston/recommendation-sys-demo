@@ -173,8 +173,6 @@ def addBookData():
 @app.route('/recommend', methods=['POST'])
 def recommend():
     user = getUserID(request.form['user_name'])
-    print(user)
-    print(ratings)
     # Check user has rated something
     if(ratings[ratings['user_id'] == int(user)].shape[0] != 0):
         preds_df = getRecommendationsTable(user)
